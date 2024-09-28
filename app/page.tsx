@@ -1,13 +1,56 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BarChart, LineChart, PieChart, Github, Puzzle, HardHat, Code2, Sun, Moon } from "lucide-react"
 import Link from "next/link"
 
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import D3BarChart from '@/components/d3-bar-chart';
+import D3LineChart from '@/components/d3-line-chart';
+import D3DonutChart from '@/components/d3-donut-chart';
+import D3TreeMap from '@/components/d3-tree-map';
+
 export default function Home() {
    const [activeTab, setActiveTab] = useState('bar')
+
+   // Example data for the bar chart
+   const barData = [
+      { name: 'A', value: 30 },
+      { name: 'B', value: 80 },
+      { name: 'C', value: 45 },
+      { name: 'D', value: 60 },
+      { name: 'E', value: 20 },
+      { name: 'F', value: 90 },
+      { name: 'G', value: 55 },
+   ];
+
+   // Example data for the line chart
+   const lineData = [
+      { name: 'oceans', dataset1: 50, dataset2: 40 },
+      { name: 'forests', dataset1: 70, dataset2: 65 },
+      { name: 'deserts', dataset1: 90, dataset2: 80 },
+   ];
+
+   // Example data for the tree map
+   const treeMapData = {
+      name: 'root',
+      children: [
+         { name: 'Category 1', value: 100 },
+         { name: 'Category 2', value: 200 },
+         { name: 'Category 3', value: 300 },
+      ],
+   };
+
+   // Example data for the donut chart
+   const donutData = [
+      { name: 'Category 1', value: 30 },
+      { name: 'Category 2', value: 70 },
+      { name: 'Category 3', value: 45 },
+      { name: 'Category 4', value: 60 },
+      { name: 'Category 5', value: 20 },
+   ];
+
    const [theme, setTheme] = useState('dark')
 
    useEffect(() => {
@@ -41,11 +84,16 @@ export default function Home() {
                   <Github className="h-5 w-5" />
                </Link>
                <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-9 w-9 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
-                  {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                  {theme === 'dark' ? (
+                     <Sun className="h-5 w-5 text-yellow-500" />
+                  ) : (
+                     <Moon className="h-5 w-5 text-gray-800 dark:text-gray-200" />
+                  )}
                </Button>
+
             </nav>
          </header>
-         <main className="flex-1 py-12 md:py-24 lg:py-32">
+         <main className="flex-1 py-12 md:py-24 lg:py-36">
             <div className="container px-4 md:px-6">
                <div className="flex flex-col items-center space-y-4 text-center">
                   <div className="space-y-2">
@@ -66,68 +114,106 @@ export default function Home() {
                   </div>
                </div>
                <div className="mt-16">
-                  <Tabs defaultValue="bar" className="w-full max-w-3xl mx-auto" onValueChange={setActiveTab}>
-                     <TabsList className="grid w-full grid-cols-3 bg-white/50 dark:bg-gray-800/50 backdrop-blur-md rounded-t-lg shadow-md">
-                        <TabsTrigger value="bar" className={`${activeTab === 'bar' ? 'text-amber-600 dark:text-amber-400' : 'text-gray-600 dark:text-gray-400'} transition-colors duration-200 hover:bg-white/30 dark:hover:bg-gray-700/30`}>Bar Chart</TabsTrigger>
-                        <TabsTrigger value="line" className={`${activeTab === 'line' ? 'text-amber-600 dark:text-amber-400' : 'text-gray-600 dark:text-gray-400'} transition-colors duration-200 hover:bg-white/30 dark:hover:bg-gray-700/30`}>Line Chart</TabsTrigger>
-                        <TabsTrigger value="pie" className={`${activeTab === 'pie' ? 'text-amber-600 dark:text-amber-400' : 'text-gray-600 dark:text-gray-400'} transition-colors duration-200 hover:bg-white/30 dark:hover:bg-gray-700/30`}>Pie Chart</TabsTrigger>
+                  <Tabs defaultValue="bar" className="w-full max-w-4xl mx-auto" onValueChange={setActiveTab}>
+                     <TabsList className="grid w-full grid-cols-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-md rounded-t-lg shadow-md">
+                        <TabsTrigger value="bar" className={`${activeTab === 'bar' ? 'text-amber-600 dark:text-amber-400' : 'text-gray-600 dark:text-gray-400'} transition-colors duration-200 hover:bg-white/30 dark:hover:bg-gray-700/30`}>
+                           Bar Chart
+                        </TabsTrigger>
+                        <TabsTrigger value="line" className={`${activeTab === 'line' ? 'text-amber-600 dark:text-amber-400' : 'text-gray-600 dark:text-gray-400'} transition-colors duration-200 hover:bg-white/30 dark:hover:bg-gray-700/30`}>
+                           Line Chart
+                        </TabsTrigger>
+                        <TabsTrigger value="tree-map" className={`${activeTab === 'tree-map' ? 'text-amber-600 dark:text-amber-400' : 'text-gray-600 dark:text-gray-400'} transition-colors duration-200 hover:bg-white/30 dark:hover:bg-gray-700/30`}>
+                           Tree Map
+                        </TabsTrigger>
+                        <TabsTrigger value="donut" className={`${activeTab === 'donut' ? 'text-amber-600 dark:text-amber-400' : 'text-gray-600 dark:text-gray-400'} transition-colors duration-200 hover:bg-white/30 dark:hover:bg-gray-700/30`}>
+                           Donut Chart
+                        </TabsTrigger>
                      </TabsList>
                      <TabsContent value="bar" className="p-6 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md rounded-b-lg mt-1 border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-200">
                         <div className="h-64 flex items-center justify-center">
-                           <BarChart className="h-40 w-40 text-amber-600 dark:text-amber-400" />
+                           <D3BarChart data={barData} xAxisTitle="Categories" yAxisTitle="Values" />
                         </div>
                         <pre className="mt-4 p-4 bg-gray-100/80 dark:bg-black/50 rounded-md overflow-x-auto backdrop-blur-sm shadow-inner">
                            <code className="text-sm text-gray-800 dark:text-gray-300">
-                              {`import { BarChart } from 'd3z'
+                              {`import D3BarChart from '@/components/d3-bar-chart';
 
 export default function MyChart() {
   const data = [
-    { label: 'A', value: 10 },
-    { label: 'B', value: 20 },
-    { label: 'C', value: 15 },
-  ]
+    { name: 'A', value: 30 },
+    { name: 'B', value: 80 },
+    { name: 'C', value: 45 },
+    { name: 'D', value: 60 },
+    { name: 'E', value: 20 },
+    { name: 'F', value: 90 },
+    { name: 'G', value: 55 },
+  ];
 
-  return <BarChart data={data} />
+  return <D3BarChart data={data} xAxisTitle="Categories" yAxisTitle="Values" />;
 }`}
                            </code>
                         </pre>
                      </TabsContent>
                      <TabsContent value="line" className="p-6 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md rounded-b-lg mt-1 border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-200">
                         <div className="h-64 flex items-center justify-center">
-                           <LineChart className="h-40 w-40 text-amber-600 dark:text-amber-400" />
+                           <D3LineChart data={lineData} xAxisTitle="Environments" yAxisTitle="Values" />
                         </div>
                         <pre className="mt-4 p-4 bg-gray-100/80 dark:bg-black/50 rounded-md overflow-x-auto backdrop-blur-sm shadow-inner">
                            <code className="text-sm text-gray-800 dark:text-gray-300">
-                              {`import { LineChart } from 'd3z'
+                              {`import D3LineChart from '@/components/d3-line-chart';
 
 export default function MyChart() {
   const data = [
-    { x: 0, y: 10 },
-    { x: 1, y: 20 },
-    { x: 2, y: 15 },
-  ]
+    { name: 'oceans', dataset1: 50, dataset2: 40 },
+    { name: 'forests', dataset1: 70, dataset2: 65 },
+    { name: 'deserts', dataset1: 90, dataset2: 80 },
+  ];
 
-  return <LineChart data={data} />
+  return <D3LineChart data={data} xAxisTitle="Environments" yAxisTitle="Values" />;
 }`}
                            </code>
                         </pre>
                      </TabsContent>
-                     <TabsContent value="pie" className="p-6 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md rounded-b-lg mt-1 border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-200">
+                     <TabsContent value="tree-map" className="p-6 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md rounded-b-lg mt-1 border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-200">
                         <div className="h-64 flex items-center justify-center">
-                           <PieChart className="h-40 w-40 text-amber-600 dark:text-amber-400" />
+                           <D3TreeMap data={treeMapData} title="Tree Map Example" />
                         </div>
                         <pre className="mt-4 p-4 bg-gray-100/80 dark:bg-black/50 rounded-md overflow-x-auto backdrop-blur-sm shadow-inner">
                            <code className="text-sm text-gray-800 dark:text-gray-300">
-                              {`import { PieChart } from 'd3z'
+                              {`import D3TreeMap from '@/components/d3-tree-map';
+
+export default function MyChart() {
+  const data = {
+    name: 'root',
+    children: [
+      { name: 'Category 1', value: 100 },
+      { name: 'Category 2', value: 200 },
+      { name: 'Category 3', value: 300 },
+    ],
+  };
+
+  return <D3TreeMap data={data} title="Tree Map Example" />;
+}`}
+                           </code>
+                        </pre>
+                     </TabsContent>
+                     <TabsContent value="donut" className="p-6 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md rounded-b-lg mt-1 border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-200">
+                        <div className="h-64 flex items-center justify-center">
+                           <D3DonutChart data={donutData} title="Donut Chart Example" />
+                        </div>
+                        <pre className="mt-4 p-4 bg-gray-100/80 dark:bg-black/50 rounded-md overflow-x-auto backdrop-blur-sm shadow-inner">
+                           <code className="text-sm text-gray-800 dark:text-gray-300">
+                              {`import D3DonutChart from '@/components/d3-donut-chart';
 
 export default function MyChart() {
   const data = [
-    { label: 'A', value: 30 },
-    { label: 'B', value: 45 },
-    { label: 'C', value: 25 },
-  ]
+    { name: 'Category 1', value: 30 },
+    { name: 'Category 2', value: 70 },
+    { name: 'Category 3', value: 45 },
+    { name: 'Category 4', value: 60 },
+    { name: 'Category 5', value: 20 },
+  ];
 
-  return <PieChart data={data} />
+  return <D3DonutChart data={data} title="Donut Chart Example" />;
 }`}
                            </code>
                         </pre>
@@ -153,7 +239,7 @@ export default function MyChart() {
                </div>
             </div>
          </main>
-         <footer className="py-6 w-full border-t border-gray-200/50 dark:border-gray-700/50 backdrop-blur-md bg-white/30 dark:bg-black/30 shadow-md">
+         <footer className="mt-auto py-6 w-full border-t border-gray-200/50 dark:border-gray-700/50 backdrop-blur-md bg-white/30 dark:bg-black/30 shadow-md">
             <div className="container flex flex-col gap-2 sm:flex-row items-center px-4 md:px-6">
                <p className="text-xs text-gray-600 dark:text-gray-400">© 2024 d3z. All rights reserved.</p>
                <nav className="sm:ml-auto flex gap-4 sm:gap-6">
