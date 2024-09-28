@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { BarChart, Github, Puzzle, Zap, Shrub, Code2, Sun, Moon } from "lucide-react"
+import { BarChart, Github, Puzzle, Zap, Shrub, Sun, Moon } from "lucide-react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
