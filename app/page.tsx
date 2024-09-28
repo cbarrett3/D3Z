@@ -80,7 +80,7 @@ export default function Home() {
                <Link className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-300 transition-colors duration-200 hover:scale-105" href="#">
                   Examples
                </Link>
-               <Link className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-300 transition-colors duration-200 hover:scale-105" href="https://github.com/yourusername/d3z">
+               <Link className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-300 transition-colors duration-200 hover:scale-105" href="https://github.com/cbarrett3/d3z">
                   <Github className="h-5 w-5" />
                </Link>
                <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-9 w-9 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
