@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { BarChart, Github, Puzzle, HardHat, Code2, Sun, Moon } from "lucide-react"
+import { BarChart, Github, Puzzle, Zap, Shrub, Code2, Sun, Moon } from "lucide-react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import D3BarChart from '@/components/d3-bar-chart';
 import D3LineChart from '@/components/d3-line-chart';
 import D3DonutChart from '@/components/d3-donut-chart';
@@ -73,43 +74,78 @@ export default function Home() {
                <BarChart className="h-6 w-6 text-amber-600 dark:text-amber-400" />
                <span className="ml-2 text-2xl font-bold text-amber-800 dark:text-amber-100 drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">d3z</span>
             </Link>
-            <nav className="ml-auto flex items-center gap-4 sm:gap-6">
-               <Link className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-300 transition-colors duration-200 hover:scale-105" href="#">
-                  Documentation
-               </Link>
-               <Link className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-300 transition-colors duration-200 hover:scale-105" href="#">
-                  Examples
-               </Link>
-               <Link className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-300 transition-colors duration-200 hover:scale-105" href="https://github.com/cbarrett3/d3z">
-                  <Github className="h-5 w-5" />
-               </Link>
-               <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-9 w-9 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
-                  {theme === 'dark' ? (
-                     <Sun className="h-5 w-5 text-yellow-500" />
-                  ) : (
-                     <Moon className="h-5 w-5 text-gray-800 dark:text-gray-200" />
-                  )}
-               </Button>
-            </nav>
+            <TooltipProvider>
+               <nav className="ml-auto flex items-center gap-4 sm:gap-6">
+                  <Tooltip>
+                     <TooltipTrigger asChild>
+                        <Link className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-300 transition-colors duration-200 hover:scale-105" href="#">
+                           Documentation
+                        </Link>
+                     </TooltipTrigger>
+                     <TooltipContent>
+                        <p>Coming Soon</p>
+                     </TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                     <TooltipTrigger asChild>
+                        <Link className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-300 transition-colors duration-200 hover:scale-105" href="#">
+                           Examples
+                        </Link>
+                     </TooltipTrigger>
+                     <TooltipContent>
+                        <p>Coming Soon</p>
+                     </TooltipContent>
+                  </Tooltip>
+                  <Link className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-300 transition-colors duration-200 hover:scale-105" href="https://github.com/cbarrett3/d3z">
+                     <Github className="h-5 w-5" />
+                  </Link>
+                  <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-9 w-9 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
+                     {theme === 'dark' ? (
+                        <Sun className="h-5 w-5 text-yellow-500" />
+                     ) : (
+                        <Moon className="h-5 w-5 text-gray-800 dark:text-gray-200" />
+                     )}
+                  </Button>
+               </nav>
+            </TooltipProvider>
          </header>
-         <main className="flex-1 py-12 md:py-24 lg:py-36">
+         <main className="flex-1 py-12 md:py-16 lg:py-24">
             <div className="container px-4 md:px-6">
                <div className="flex flex-col items-center space-y-4 text-center">
                   <div className="space-y-2">
                      <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 dark:from-amber-400 dark:via-amber-300 dark:to-amber-500 drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
-                        Beautiful Data Visualizations
+                        Data Drive Documents - Easy!
                      </h1>
                      <p className="mx-auto max-w-[700px] text-gray-700 dark:text-gray-400 md:text-xl drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]">
                         Powerful, customizable, and easy-to-use D3.js components for React. Build stunning data visualizations in minutes and seamlessly integrate them into your apps with simple copy and paste.
                      </p>
                   </div>
-                  <div className="space-x-4">
+                  {/* <div className="space-x-4">
                      <Button className="bg-amber-600 text-white hover:bg-amber-500 dark:bg-amber-500 dark:text-gray-900 dark:hover:bg-amber-400 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
                         Get Started
-                     </Button>
-                     <Button variant="outline" className="border-amber-600 text-amber-700 hover:bg-amber-100/50 dark:border-amber-400 dark:text-amber-300 dark:hover:bg-gray-800/50 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
-                        View on GitHub
-                     </Button>
+                     </Button> 
+                     <Link href="https://github.com/cbarrett3/d3z" passHref>
+                        <Button variant="outline" className="border-amber-600 text-amber-700 hover:bg-amber-100/50 dark:border-amber-400 dark:text-amber-300 dark:hover:bg-gray-800/50 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
+                           View on GitHub
+                        </Button>
+                     </Link>
+                  </div> */}
+               </div>
+               <div className="mt-12 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+                  <div className="flex flex-col space-y-2 bg-white/50 dark:bg-gray-800/50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1">
+                     <Puzzle className="h-8 w-8 text-amber-600 dark:text-amber-400" />
+                     <h3 className="text-xl font-semibold text-amber-800 dark:text-amber-100">Full Creative Control</h3>
+                     <p className="text-gray-700 dark:text-gray-400">Integrate stunning visuals into your apps with simple copy and paste. You own the code.</p>
+                  </div>
+                  <div className="flex flex-col space-y-2 bg-white/50 dark:bg-gray-800/50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1">
+                     <Zap className="h-8 w-8 text-amber-600 dark:text-amber-400" />
+                     <h3 className="text-xl font-semibold text-amber-800 dark:text-amber-100">Rapid Interactivity</h3>
+                     <p className="text-gray-700 dark:text-gray-400">Lighting quick and extremely minimal. D3.js is the only dependency.</p>
+                  </div>
+                  <div className="flex flex-col space-y-2 bg-white/50 dark:bg-gray-800/50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1">
+                     <Shrub className="h-8 w-8 text-amber-600 dark:text-amber-400" />
+                     <h3 className="text-xl font-semibold text-amber-800 dark:text-amber-100">Unlimited Possibillities</h3>
+                     <p className="text-gray-700 dark:text-gray-400">Take complexity head on. There are no constraints.</p>
                   </div>
                </div>
                <div className="mt-16">
@@ -218,23 +254,6 @@ export default function MyChart() {
                         </pre>
                      </TabsContent>
                   </Tabs>
-               </div>
-               <div className="mt-24 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
-                  <div className="flex flex-col space-y-2 bg-white/50 dark:bg-gray-800/50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1">
-                     <Puzzle className="h-8 w-8 text-amber-600 dark:text-amber-400" />
-                     <h3 className="text-xl font-semibold text-amber-800 dark:text-amber-100">Customizable</h3>
-                     <p className="text-gray-700 dark:text-gray-400">Easily adapt and extend components to fit your specific needs.</p>
-                  </div>
-                  <div className="flex flex-col space-y-2 bg-white/50 dark:bg-gray-800/50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1">
-                     <HardHat className="h-8 w-8 text-amber-600 dark:text-amber-400" />
-                     <h3 className="text-xl font-semibold text-amber-800 dark:text-amber-100">Developer-Owned</h3>
-                     <p className="text-gray-700 dark:text-gray-400">Full control over your code and data visualization architecture.</p>
-                  </div>
-                  <div className="flex flex-col space-y-2 bg-white/50 dark:bg-gray-800/50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1">
-                     <Code2 className="h-8 w-8 text-amber-600 dark:text-amber-400" />
-                     <h3 className="text-xl font-semibold text-amber-800 dark:text-amber-100">Open Source</h3>
-                     <p className="text-gray-700 dark:text-gray-400">Contribute, modify, and adapt the codebase to your project&apos;s needs.</p>
-                  </div>
                </div>
             </div>
          </main>
