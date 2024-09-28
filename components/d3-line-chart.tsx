@@ -292,6 +292,7 @@ const D3LineChart: React.FC<D3LineChartProps> = ({
                         ],
                      );
                });
+            console.log(points)
          });
       }
    };
