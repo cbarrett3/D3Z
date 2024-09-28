@@ -90,7 +90,6 @@ export default function Home() {
                      <Moon className="h-5 w-5 text-gray-800 dark:text-gray-200" />
                   )}
                </Button>
-
             </nav>
          </header>
          <main className="flex-1 py-12 md:py-24 lg:py-36">
