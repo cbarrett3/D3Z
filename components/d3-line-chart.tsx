@@ -303,7 +303,7 @@ const D3LineChart: React.FC<D3LineChartProps> = ({
       if (container && svg) {
          const resizeObserver = new ResizeObserver(
             (entries) => {
-               for (let entry of entries) {
+               for (const entry of entries) {
                   const { width, height } =
                      entry.contentRect;
                   createChart(width, height);

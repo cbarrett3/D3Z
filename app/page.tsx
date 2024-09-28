@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { BarChart, LineChart, PieChart, Github, Puzzle, HardHat, Code2, Sun, Moon } from "lucide-react"
+import { BarChart, Github, Puzzle, HardHat, Code2, Sun, Moon } from "lucide-react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
@@ -233,7 +233,7 @@ export default function MyChart() {
                   <div className="flex flex-col space-y-2 bg-white/50 dark:bg-gray-800/50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1">
                      <Code2 className="h-8 w-8 text-amber-600 dark:text-amber-400" />
                      <h3 className="text-xl font-semibold text-amber-800 dark:text-amber-100">Open Source</h3>
-                     <p className="text-gray-700 dark:text-gray-400">Contribute, modify, and adapt the codebase to your project's needs.</p>
+                     <p className="text-gray-700 dark:text-gray-400">Contribute, modify, and adapt the codebase to your project&apos;s needs.</p>
                   </div>
                </div>
             </div>
