@@ -1,2 +1,2 @@
 # D3Z
-Composable D3 Data Visualization Components
+Completely custom data visualizations for the web - built on D3.js.
